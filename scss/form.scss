@@ -1,0 +1,391 @@
+// color
+$_blue: #4DC6CF;
+$_black: #303030;
+$_white: #fff;
+$_grey: #EDEDEF;
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+$_font: 'Poppins', sans-serif;
+// style
+
+
+body {
+   width: 100%;
+   height: 100%;
+   background-color: $_grey;
+
+   display: flex;
+   justify-content: center;
+   font-family: $_font;
+}
+
+.main {
+   margin: 0 auto;
+   background-color: $_grey;
+   display: flex;
+   align-items: center;
+
+   height: 100%;
+   width: 60%;
+}
+
+.effect {
+   width: 100%;
+   height: 80%;
+   position: relative;
+   box-shadow: 0px 16px 20px rgba(0, 0, 0, 0.16);
+}
+.back {
+   position: absolute;
+   width: 100%;
+   min-height: 100%;
+   height: 100%;
+   display: flex;
+   background-color: $_blue;
+
+		&__in {
+		}
+
+		&__up {
+		}
+
+      &__content {
+         width: 50%;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         padding: 50px 30px;
+      }
+
+      &__text {
+         text-align: center;
+      }
+   
+      &__title {
+         font-style: normal;
+         font-weight: 700;
+         font-size: 22px;
+         line-height: 140%;
+         color: $_white;
+         margin: 0 0 10px 0;
+         text-transform: uppercase;
+         letter-spacing: 0.05em;
+      }
+
+      &__description {
+         font-style: normal;
+         font-weight: 400;
+         font-size: 13px;
+         letter-spacing: 0.05em;
+         line-height: 140%;
+         color: #FFFFFF;
+         max-width: 70%;
+         margin: 0 auto 12px;
+      }
+   
+      &__btn {
+         font-style: normal;
+         font-weight: 400;
+         font-size: 16px;
+         line-height: 34px;
+         letter-spacing: 0.01em;
+         text-transform: uppercase;
+         color: $_white;
+      }
+}
+.btn {
+   height: 34px;
+   width: 124px;
+   display: inline-block;
+   text-align: center;
+
+   font-size: 14px;
+   line-height: 34px;
+   letter-spacing: 0.05em;
+   border-radius: 17px;
+   color: $_white;
+   text-transform: uppercase;
+
+   margin: 10px 0 0 0;
+
+   &__line {
+      border: 1px solid $_white;
+   }
+
+   &__fill {
+      background-color: $_blue;
+      border: 1px solid $_blue;
+   }
+}
+.slideBox {
+   position: relative;
+   z-index: 2;
+   height: 100%;
+   width: 50%;
+   overflow: hidden;
+
+   transition: margin .3s;
+}
+.content-layer {
+   width: 200%;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   margin-left: 0;
+
+   transition: margin .3s;
+   will-change: margin;
+   background-color: $_white;
+
+   &__layer {
+      width: 100%;
+   }
+
+   & .active {
+      margin-left: -488px;
+      position: relative;
+      z-index: 3;
+   }
+
+   &__form {
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      padding: 50px 40px;
+      margin: 0 auto;
+      justify-content: center;
+      align-items: center;
+   }
+
+   &__title {
+      text-align: center;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 24px;
+      line-height: auto;
+      text-transform: uppercase;
+      color: $_blue;
+      margin: 0 0 22px 0;
+   }
+
+   &__inp {
+      display: block;
+      height: 34px;
+      width: 100%;
+
+      padding: 0 16px;
+      margin: 0;
+
+      background: $_grey;
+      border-radius: 17px;
+
+      line-height: 34px;
+      font-size: 12px;
+   }
+
+   &__item {
+      margin: 0 0 10px 0;
+      position: relative;
+   }
+   &__eye {
+      display: block;
+      position: absolute;
+      right: 10px;
+      top: 17px;
+      transform: translateY(-50%);
+
+      width: 14px;
+      height: 14px;
+
+      background: url("../img/icons/eye.svg");
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+
+      cursor: pointer;
+   }
+
+   &__err {
+      font-size: 12px;
+      line-height: 14px;
+      padding: 0 0 0 22px;
+      margin: 5px 0 0 0;
+      color: red;
+      position: relative;
+
+      display: none;
+
+      &::before {
+         content: "";
+         width: 14px;
+         height: 13px;
+
+         position: absolute;
+         left: 4px;
+         top: 0;
+         z-index: 2;
+
+         background-image: url("../img/icons/err.svg");
+         background-position: center;
+         background-size: contain;
+         background-repeat: no-repeat;
+      }
+   }
+
+   &__buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+   }
+}
+.content-layer ._err {
+   & .inp {
+      border: 1px solid rgba(255, 0, 0, .6);
+      box-shadow: 0 0 6px rgba(255, 0, 0, .6);
+      background-color: $_white;
+   }
+   & .errors {
+      display: block;
+   }
+}
+.social {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin: 0 0 16px 0;
+
+   &__col {
+      margin: 0 6px;
+   }
+
+   &__link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $_black;
+      width: 30px;
+      height: 30px;
+      border-radius: 20px;
+      border: 1px solid $_blue;
+      position: relative;
+
+      i {
+         transition: all .3s ease;
+         background: transparent;
+         position: relative;
+         width: 100%;
+         height: 100%;
+         text-align: center;
+         display: block;
+      
+
+         &::before {
+            font-size: 10px;
+            line-height: 30px;
+            top: -2px;
+            z-index: 3;
+            transition: all .3s ease;
+            color: $_blue;
+         }
+      }
+      span {
+         display: block;
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%) scale(0);
+         z-index: 0;
+
+         display: inline-block;
+         width: calc(100% - 4px);
+         height: calc(100% - 4px);
+         background-color: $_blue;
+         border-radius: 50%;
+         transition: all .3s ease;
+      }
+      &:hover {
+         span {
+            transform: translate(-50%, -50%) scale(1);
+         }
+         i {
+            animation: shake .5s linear;
+            &::before {
+               color: $_white;
+               animation: shake .5s linear;
+            }
+         }
+      }
+   }
+}
+.skew {
+   background-color: transparent;
+   color: $_white;
+   overflow: hidden;
+   transition: color .3s;
+
+   span {
+      position: relative;
+      z-index: 2;
+   }
+
+   &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -50px;
+      width: 0;
+      height: 110%;
+      background-color: $_white;
+      transform: skew(35deg);
+      z-index: 1;
+      transition: width .4s;
+   }
+
+   &:hover {
+      color: $_blue;
+      border: 1px solid $_blue;
+      &::before {
+         width: 150%;
+      }
+   }
+
+   &_bl {
+      color: $_blue;
+      &::before {
+         background-color: $_blue;
+      }
+      &:hover {
+         color: #fff;
+         border: 1px solid $_white;
+         &::before {
+            width: 150%;
+         }
+      }
+   }
+}
+.inp {
+   transition: all .3s ease;
+   border: 1px solid $_grey;
+
+   &:focus {
+      background-color: $_white;
+      border: 1px solid $_blue;
+   }
+}
+@keyframes shake {
+   0% {
+      transform: rotate(0deg);
+   }
+   25% {
+      transform: rotate(-30deg);
+   }
+   50% {
+      transform: rotate(30deg);
+   }
+   75% {
+      transform: rotate(-30deg);
+   }
+   100% {
+      transform: rotate(0deg);
+   }
+}

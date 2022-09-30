@@ -1,0 +1,33 @@
+//wrapper
+.wrapper{width: 100%; min-height: 100%; overflow: hidden;
+   display: flex; flex-direction: column;
+   &.loaded{}
+}
+
+//ui kit
+@import '_nullstyle';
+@import '_variables';
+@import '_mixins';
+@import "_forms";
+@import "_ui";
+@import "./form.scss";
+
+//components
+@import "_header";
+@import "_footer";
+
+//body
+body {}
+
+//main
+.main {
+   flex: 1 1 auto;
+}
+//============================================================
+//section
+.main {
+   position: relative;
+}
+
+
+

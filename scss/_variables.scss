@@ -1,0 +1,29 @@
+//fonts
+
+//color
+$_white: #fff;
+$_black: #000;
+$_grey: rgb(46, 46, 46);
+$_color1: rgb(60, 115, 226);
+$_color2: rgb(38, 202, 46);
+$_color3: rgb(255, 0, 140);
+
+//font-family
+$ff1: 'Lato', sans-serif;
+$ff2: 'Lato', sans-serif;
+$ff3: 'Lato', sans-serif;
+
+//container templates
+$minwidth: 320px;
+$mw: 1180px;
+$md1: $mw+12px;
+$md2: 992.98px;
+$md3: 767.98px;
+$md4: 479.98px; 
+//container
+.container {
+   max-width: $mw; margin: 0 auto; width: 100%; height: 100%;
+   @media (max-width: $md1){max-width: 970px;}
+   @media (max-width: $md2) {max-width: 750px;}
+   @media (max-width: $md4) {max-width: none; padding: 0 10px;}
+}

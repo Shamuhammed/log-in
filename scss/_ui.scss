@@ -1,0 +1,12 @@
+//title
+.title-block {
+   &__title {
+
+      &::after {
+         content: "";
+      }
+   }
+   &__subtitle {}
+}
+//text
+.text-block{}

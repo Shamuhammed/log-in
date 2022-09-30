@@ -1,0 +1,7 @@
+{
+   "users": [
+      {"id": "0", "login": "Alexex", "name": "Alex", "password": "e10adc3949ba59abbe56e057f20f883e", "email": "asddf@mail.ru"},
+      {"id": "1", "login": "Dany", "name": "aaaa", "password": "12568", "email": "asddf@mail.ru"},
+      {"id": "2", "login": "Andy", "name": "aaaa", "password": "12568", "email": "asddf@mail.ru"}
+   ]
+}

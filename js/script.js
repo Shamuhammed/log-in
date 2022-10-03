@@ -1,3 +1,48 @@
+/*   == is auth user ==    */
+const signin = document.querySelector('.effect');
+const userName = document.querySelector('.user__name');
+const userSign = document.querySelector('.user__sign');
+const userExit = document.querySelector('.user__exit');
+async function isAuth() {
+   const userId = getCookie('userId');
+   const userLogin = getCookie('userLogin');  
+   signin.classList.remove('show');
+   if (userId) {
+      userSign.style.display = 'none';
+      userExit.style.display = 'inline-block';
+      userName.style.display = 'inline-block';
+      userName.innerHTML = userLogin;
+   } else {
+      userSign.style.display = 'inline-block';
+      userExit.style.display = 'none';
+      userName.style.display = 'none';
+   }
+}
+function getCookie(name) {
+   let matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+   ));
+   return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+/*   == exit user ==    */
+userExit.addEventListener('click', userExitFunc)
+async function userExitFunc() {
+   let data = new FormData();
+   data.append('type', 'exit');
+   let response = await fetch('userRegister.php', {
+      method: 'POST',
+      body: data
+   });
+
+   response.json().then(res => alert(res.message));
+   isAuth()
+}
+/*   == auth user ==    */
+userSign.addEventListener('click', e=>{
+   signin.classList.add('show');
+})
+
 /*   == show password ==    */
 const eyes = document.querySelectorAll('.content-layer__eye');
 eyes.forEach(eye => {
@@ -40,6 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
       contentLayer.style.marginLeft = '0';
       removeErr()
    });
+
+   isAuth()
 })
 function removeErr() { // clear values and errors
    document.querySelectorAll('.content-layer__item').forEach(item => {
@@ -61,21 +108,21 @@ function formValidate(e) {
    formAddError(input, errors.message);
 }
 
-/*   == field validators ==    */
+/*   == input validator ==    */
 function inputValidate(input) { // validate current input value
    switch (input.name) {
       case 'login':
          return loginTest(input);
-      
+
       case 'password':
          return passwordTest(input);
-      
+
       case 'confirm_password':
          return confirmPasswordTest(input);
-      
+
       case 'email':
          return emailTest(input);
-      
+
       case 'name':
          return nameTest(input);
    }
@@ -98,8 +145,8 @@ function loginTest(input) { // validate login
    if (!input.value) return { err: true, message: 'Required field' }
    else if (input.value.length < 6) return { err: true, message: 'Minimum 6 characters.' }
    else if (input.value.length > 20) return { err: true, message: 'Maximum 20 characters.' }
-   else if (/\W+/.test(input.value)) return { err: true, message: 'Use only latin letters or numbers.' } 
-   else if (!/\w{6,20}/.test(input.value)) return { err: true, message: 'Use only latin letters or numbers.' } 
+   else if (/\W+/.test(input.value)) return { err: true, message: 'Use only latin letters or numbers.' }
+   else if (!/\w{6,20}/.test(input.value)) return { err: true, message: 'Use only latin letters or numbers.' }
 
    return { err: false, message: '' };
 }
@@ -108,17 +155,17 @@ function nameTest(input) { // validate name
    if (!input.value) return { err: true, message: 'Required field' }
    else if (input.value.length < 2) return { err: true, message: 'Minimum 2 characters.' }
    else if (input.value.length > 20) return { err: true, message: 'Maximum 20 characters.' }
-   else if (/[\W\d]+/.test(input.value)) return { err: true, message: 'Use only latin letters.' } 
-   else if (!/[a-zA-Z]{2,20}/.test(input.value)) return { err: true, message: 'Use only latin letters.' } 
+   else if (/[\W\d]+/.test(input.value)) return { err: true, message: 'Use only latin letters.' }
+   else if (!/[a-zA-Z]{2,20}/.test(input.value)) return { err: true, message: 'Use only latin letters.' }
 
    return { err: false, message: '' };
 }
 function passwordTest(input) { // validate password
-   
+
    if (!input.value) return { err: true, message: 'Required field' }
    else if (input.value.length < 6) return { err: true, message: 'Minimum 6 characters.' }
    else if (input.value.length > 20) return { err: true, message: 'Maximum 20 characters.' }
-   else if (!/\w{6,20}/.test(input.value)) return { err: true, message: 'Use only latin letters or numbers.' } 
+   else if (!/\w{6,20}/.test(input.value)) return { err: true, message: 'Use only latin letters or numbers.' }
 
    return { err: false, message: '' };
 }
@@ -129,14 +176,14 @@ function confirmPasswordTest(input) { // validate confirm password
    return { err: false, message: '' };
 }
 function emailTest(input) { // validate email
-   
+
    if (!input.value) return { err: true, message: 'Required field' }
-   else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(input.value)) return { err: true, message: 'Invalid email.' } 
+   else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(input.value)) return { err: true, message: 'Invalid email.' }
 
    return { err: false, message: '' };
 }
 
-// submit
+/*   == submit form ==    */
 const forms = document.querySelectorAll('form');
 forms.forEach(form => {
    form.addEventListener('submit', handleSubmitForm);
@@ -147,6 +194,7 @@ async function handleSubmitForm(e) {
 
    const form = e.target;
    let formData = new FormData(form);
+   formData.append('type', (form.name === 'signin') ? 'signin' : 'signup');
    let errors = 0;
 
    form.querySelectorAll('.inp').forEach(input => {
@@ -163,16 +211,12 @@ async function handleSubmitForm(e) {
          body: formData
       });
 
-      // console.log(response);
-      response.json().then(res => console.log(res));
-      
       if (response.ok) {
-         // let result = await response.json();
-         // alert(result.message);
-         // formPreview.innerHTML = '';
-         // form.reset();
-         // form.classList.remove('_sending');
-      }else {
+         response.json().then(res => alert(res.message));
+         form.reset();
+         form.classList.remove('_sending');
+         isAuth()
+      } else {
          alert('Произошла ошибка с отправкой формы');
          form.classList.remove('_sending');
       }
@@ -181,34 +225,7 @@ async function handleSubmitForm(e) {
       alert('Заполните обязательные поля');
    }
 }
-/*
-async function formSend(e) {
-   e.preventDefault();
 
-   let error = formValidate(form);
 
-   let formData = new FormData(form);
-   formData.append('image', formImage.files[0]);
 
-   if (error === 0) {
-      form.classList.add('_sending');
-      let response = await fetch('sendmail.php', {
-         method: 'POST',
-         body: formData
-      });
-      if (response.ok) {
-         let result = await response.json();
-         alert(result.message);
-         formPreview.innerHTML = '';
-         form.reset();
-         form.classList.remove('_sending');
-      }else {
-         alert('Ошибка');
-         form.classList.remove('_sending');
-      }
 
-   } else {
-      alert('Заполните обязательные поля');
-   }
-}
-*/

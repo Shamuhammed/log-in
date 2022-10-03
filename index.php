@@ -1,32 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-   <title>Document</title>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-   <!-- css -->
-   <link rel="stylesheet" href="css/icon.css">
-   <link rel="stylesheet" href="css/style.css">
-   <!-- favicon -->
-   <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
-</head>
-
-<body>
-   <div class="wrapper">
-      <!-- header -->
-      <header class="header" id="header">
-         <div class="container">
-
-         </div>
-      </header>
-      <!-- main       -->
+   
+<?php 
+   error_reporting(E_ALL);
+   ini_set('display_errors', 'on');
+   mb_internal_encoding('UTF-8');
+   include 'header.php'; 
+?>
       <main class="main" id="main">
-   <?php 
 
-   ?>
          <section class="effect">
             <div class="back">
                <div class="back__in back__content">
@@ -124,15 +104,6 @@
          </section>
 
       </main>
-      <!-- footer -->
-      <footer class="footer" id="footer">
-         <div class="container">
-
-         </div>
-      </footer>
-   </div>
-   <!-- scripts -->
-   <script src="js/script.js"></script>
-</body>
-
-</html>
+<?php 
+   include 'footer.php';
+?>

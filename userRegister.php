@@ -43,17 +43,13 @@ class UserRegister{
            $data = $this->getData();
             
            $data = !empty($data)?array_filter($data):$data; 
-           if(!empty($data)){ 
+           if(!$this->uniquenessCheck($data, $newData['login'], $newData['email'])){ 
                array_push($data, $newData); 
-           }elseif (!$this->uniquenessCheck($data, $newData['login'], $newData['email'])){ 
-               $data[] = $newData; 
-           } 
-           $insert = file_put_contents($this->jsonFile, json_encode(['users'=>$data])); 
-            
-           return $insert ? $id : false; 
-       }else{ 
-           return false; 
-       } 
+               $insert = file_put_contents($this->jsonFile, json_encode(['users'=>$data]));             
+               return $insert ? $id : false; 
+            } 
+       }
+       return false; 
    } 
 
    public function input($newData){ // Проверка логин пороль
@@ -84,19 +80,23 @@ class UserRegister{
 $message = 'test';
 
 if (!empty($_POST['type']) && $_POST['type'] == 'signup') {
+    $message = 'Error2';
     $signup = new UserRegister;
     $userId = $signup->insert(['name'=>$_POST['name'], 'login'=>$_POST['login'], 'password'=>md5($_POST['password']), 'email'=>$_POST['email']]);
     if ($userId) {
         $signup->authUser($userId, $_POST['login']);
+        $message = 'signUp';
     }
-    $message = 'signUp';
 } 
 elseif (!empty($_POST['type']) && $_POST['type'] == 'signin') {
     $signin = new UserRegister;
     $userId = $signin->input(['login'=>$_POST['login'], 'password'=>$_POST['password']]);
-    $userLogin = $_POST['login'];
-    $signin->authUser($userId, $userLogin);
-    $message = 'signin';
+    $message = 'Error1';
+    if ($userId) {
+        $userLogin = $_POST['login'];
+        $signin->authUser($userId, $userLogin);
+        $message = 'signin';
+    }    
 }
 elseif (!empty($_POST['type']) && $_POST['type'] == 'auth') {
     $authUser = new UserRegister;
@@ -114,6 +114,19 @@ elseif (!empty($_POST['type']) && $_POST['type'] == 'exit') {
 }
 
 $response = ['message' => $message];
+
+if ($message == 'Error1') {
+    // 
+    // Не закрывать форму
+    // сгенерировать ошибку
+    $response['error'] = 'Hеправильный логин или пороль попробуйте еще раз';
+} elseif($message == 'Error2'){
+    // Пользователь с таким логином или емайл уже существует
+    // не закрывать форму
+    // сгенерировать ошибку
+    $response['error'] = 'Пользователь с таким логином или емайл уже существует';
+}
+
 header('Content-type: application/json');
 echo json_encode($response);
 ?>

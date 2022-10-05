@@ -211,11 +211,19 @@ async function handleSubmitForm(e) {
          body: formData
       });
 
+      //response.json().then(res => console.log(res));
+
       if (response.ok) {
-         response.json().then(res => alert(res.message));
-         form.reset();
+         response.json().then(
+            res => { // console.log(res)
+            if (!res.error) {
+               alert(res.message)
+               form.reset();
+               isAuth()
+            } else alert(res.error);
+         });
          form.classList.remove('_sending');
-         isAuth()
+
       } else {
          alert('Произошла ошибка с отправкой формы');
          form.classList.remove('_sending');
